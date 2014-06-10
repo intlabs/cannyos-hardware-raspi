@@ -51,7 +51,7 @@ pacman -S --noconfirm slim && \
 systemctl enable slim.service && \
 systemctl enable graphical.target
 
-curl https://raw.githubusercontent.com/intlabs/cannyos-hardware-raspi/master/home/root/xinitrc >> ~/.xinitrc
-curl https://raw.githubusercontent.com/intlabs/cannyos-hardware-raspi/master/home/root/bash_profile >> ~/.bash_profile
+curl https://raw.githubusercontent.com/intlabs/cannyos-hardware-raspi/master/root/xinitrc >> ~/.xinitrc
+curl https://raw.githubusercontent.com/intlabs/cannyos-hardware-raspi/master/root/bash_profile >> ~/.bash_profile
 
 reboot
