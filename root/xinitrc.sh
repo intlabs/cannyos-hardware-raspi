@@ -7,4 +7,5 @@
 #unset f 
 #fi
 
-exec startxfce4
+#exec startxfce4
+exec midori -i 120 -e Fullscreen -e Navigationbar -a http://www.google.com
