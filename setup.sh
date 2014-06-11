@@ -51,9 +51,12 @@ echo ""
 
 echo "Run this script as root only."
 #pacman -Syy --noconfirm && \
-pacman -S --noconfirm  docker && \
-systemctl start docker && \
-systemctl enable docker
+#pacman -S --noconfirm  docker && \
+#systemctl start docker && \
+#systemctl enable docker
+#docker -d &
+#sysctl -w net.ipv4.ip_forward=1
+#docker pull resin/rpi-raspbian
 
 pacman-key --init && \
 pacman -Syu --noconfirm && \
