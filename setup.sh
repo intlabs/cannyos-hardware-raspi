@@ -20,7 +20,6 @@
 #
 # curl https://raw.githubusercontent.com/intlabs/cannyos-hardware-raspi/master/setup.sh | sh
 
-
 clear
 curl https://raw.githubusercontent.com/intlabs/cannyos-hardware-raspi/master/CannyOS/CannyOS.splash
 #     *****************************************************
@@ -39,11 +38,10 @@ echo "*                                                   *"
 echo "*****************************************************"
 echo ""
 
-
-#pacman -S alsa-utils alsa-firmware alsa-lib alsa-plugins
+pacman -S alsa-utils alsa-firmware alsa-lib alsa-plugins --noconfirm 
 
 #Set sound output channel (0 for Auto, 1 for Analog out, 3 for HDMI)
-#amixer cset numid=3 x
+amixer cset numid=1 x
 
 #Caveats for HDMI audio
 #Some applications require a setting in /boot/config.txt to force audio over HDMI:
@@ -52,17 +50,6 @@ echo ""
 # Add new user
 useradd -m -s /bin/bash user
 echo 'user:acoman' | chpasswd
-
-
-
-
-echo "Run this script as root only."
-pacman -Syy --noconfirm && \
-pacman -S --noconfirm  docker && \
-systemctl start docker && \
-systemctl enable docker && \
-sysctl -w net.ipv4.ip_forward=1 && \
-docker pull resin/rpi-raspbian
 
 pacman-key --init && \
 pacman -Syu --noconfirm && \
@@ -73,15 +60,22 @@ pacman -S --noconfirm slim && \
 systemctl enable slim.service && \
 systemctl enable graphical.target
 
-/etc/slim.conf
-default_user        user
-focus_password      yes
-auto_login          yes
-
+# Set Up Slim for autologin
+printf "default_user        user\n" >> /etc/slim.conf
+printf "focus_password      yes\n" >> /etc/slim.conf
+printf "auto_login          yes\n" >> /etc/slim.conf
 
 #Set up x init and bash profile for user
 curl https://raw.githubusercontent.com/intlabs/cannyos-hardware-raspi/master/root/xinitrc.sh >> /home/user/.xinitrc
 chmod +x /home/user/.xinitrc
 curl https://raw.githubusercontent.com/intlabs/cannyos-hardware-raspi/master/root/bash_profile >> /home/user/.bash_profile
+
+echo "Run this script as root only."
+pacman -Syy --noconfirm && \
+pacman -S --noconfirm  docker && \
+systemctl start docker && \
+systemctl enable docker && \
+sysctl -w net.ipv4.ip_forward=1 && \
+docker pull resin/rpi-raspbian
 
 reboot
