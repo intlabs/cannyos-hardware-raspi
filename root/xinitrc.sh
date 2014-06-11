@@ -8,4 +8,5 @@
 #fi
 
 #exec startxfce4
-exec midori -i 120 -e Fullscreen -e Navigationbar -a http://www.google.com
+exec midori -e Fullscreen -e Navigationbar -a http://desktop-demo.cannycomputing.net &
+exec openbox-session

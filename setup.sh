@@ -49,26 +49,39 @@ echo ""
 #Some applications require a setting in /boot/config.txt to force audio over HDMI:
 #hdmi_drive=2
 
+# Add new user
+useradd -m -s /bin/bash user
+echo 'user:acoman' | chpasswd
+
+
+
+
 echo "Run this script as root only."
-#pacman -Syy --noconfirm && \
-#pacman -S --noconfirm  docker && \
-#systemctl start docker && \
-#systemctl enable docker
-#docker -d &
-#sysctl -w net.ipv4.ip_forward=1
-#docker pull resin/rpi-raspbian
+pacman -Syy --noconfirm && \
+pacman -S --noconfirm  docker && \
+systemctl start docker && \
+systemctl enable docker && \
+sysctl -w net.ipv4.ip_forward=1 && \
+docker pull resin/rpi-raspbian
 
 pacman-key --init && \
 pacman -Syu --noconfirm && \
 pacman -S --noconfirm mesa xf86-video-fbdev xf86-video-vesa && \
 pacman -S --noconfirm xorg-xinit xorg-server xorg-server-utils xterm && \
-pacman -S --noconfirm midori && \
+pacman -S --noconfirm openbox midori && \
 pacman -S --noconfirm slim && \
 systemctl enable slim.service && \
 systemctl enable graphical.target
 
-curl https://raw.githubusercontent.com/intlabs/cannyos-hardware-raspi/master/root/xinitrc.sh >> ~/.xinitrc
-chmod +x ~/.xinitrc
-curl https://raw.githubusercontent.com/intlabs/cannyos-hardware-raspi/master/root/bash_profile >> ~/.bash_profile
+/etc/slim.conf
+default_user        user
+focus_password      yes
+auto_login          yes
+
+
+#Set up x init and bash profile for user
+curl https://raw.githubusercontent.com/intlabs/cannyos-hardware-raspi/master/root/xinitrc.sh >> /home/user/.xinitrc
+chmod +x /home/user/.xinitrc
+curl https://raw.githubusercontent.com/intlabs/cannyos-hardware-raspi/master/root/bash_profile >> /home/user/.bash_profile
 
 reboot
