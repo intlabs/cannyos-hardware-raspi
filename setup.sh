@@ -42,6 +42,11 @@ echo ""
 
 
 echo "Run this script as root only."
+pacman -Syy --noconfirm && \
+pacman -S --noconfirm  docker && \
+systemctl start docker && \
+systemctl enable docker
+
 pacman-key --init && \
 pacman -Syu --noconfirm && \
 pacman -S --noconfirm xorg-xinit xorg-server xorg-server-utils xterm && \
@@ -52,6 +57,7 @@ systemctl enable slim.service && \
 systemctl enable graphical.target
 
 curl https://raw.githubusercontent.com/intlabs/cannyos-hardware-raspi/master/root/xinitrc >> ~/.xinitrc
+chmod +x ~/.xinitrc
 curl https://raw.githubusercontent.com/intlabs/cannyos-hardware-raspi/master/root/bash_profile >> ~/.bash_profile
 
 reboot
