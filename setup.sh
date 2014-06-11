@@ -40,18 +40,26 @@ echo "*****************************************************"
 echo ""
 
 
+#pacman -S alsa-utils alsa-firmware alsa-lib alsa-plugins
+
+#Set sound output channel (0 for Auto, 1 for Analog out, 3 for HDMI)
+#amixer cset numid=3 x
+
+#Caveats for HDMI audio
+#Some applications require a setting in /boot/config.txt to force audio over HDMI:
+#hdmi_drive=2
 
 echo "Run this script as root only."
-pacman -Syy --noconfirm && \
+#pacman -Syy --noconfirm && \
 pacman -S --noconfirm  docker && \
 systemctl start docker && \
 systemctl enable docker
 
 pacman-key --init && \
 pacman -Syu --noconfirm && \
+pacman -S --noconfirm mesa xf86-video-fbdev xf86-video-vesa && \
 pacman -S --noconfirm xorg-xinit xorg-server xorg-server-utils xterm && \
 pacman -S --noconfirm xfce4 && \
-pacman -S --noconfirm mesa xf86-video-fbdev xf86-video-vesa && \
 pacman -S --noconfirm slim && \
 systemctl enable slim.service && \
 systemctl enable graphical.target
