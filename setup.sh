@@ -62,7 +62,7 @@ pacman-key --init && \
 pacman -Syu --noconfirm && \
 pacman -S --noconfirm mesa xf86-video-fbdev xf86-video-vesa && \
 pacman -S --noconfirm xorg-xinit xorg-server xorg-server-utils xterm && \
-pacman -S --noconfirm xfce4 && \
+pacman -S --noconfirm midori && \
 pacman -S --noconfirm slim && \
 systemctl enable slim.service && \
 systemctl enable graphical.target
