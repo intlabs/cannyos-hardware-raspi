@@ -63,25 +63,28 @@ curl https://raw.githubusercontent.com/intlabs/cannyos-hardware-raspi/master/roo
 
 reboot
 
-#echo "Install Docker"
-#pacman -Syy --noconfirm && \
-#pacman -S --noconfirm  docker && \
-#systemctl start docker && \
-#systemctl enable docker && \
-#sysctl -w net.ipv4.ip_forward=1 && \
-#docker -d &
+
+pacman -S alsa-utils alsa-firmware alsa-lib alsa-plugins --noconfirm 
+
+#Set sound output channel (0 for Auto, 1 for Analog out, 3 for HDMI)
+amixer cset numid=1 x
+
+#Caveats for HDMI audio
+#Some applications require a setting in /boot/config.txt to force audio over HDMI:
+#hdmi_drive=2
+reboot
+
+
+echo "Install Docker"
+pacman -Syy --noconfirm && \
+pacman -S --noconfirm  docker && \
+systemctl start docker && \
+systemctl enable docker && \
+sysctl -w net.ipv4.ip_forward=1 && \
+docker -d &
 
 #echo "pull base image"
 #docker pull resin/rpi-raspbian
 
 
 
-
-#pacman -S alsa-utils alsa-firmware alsa-lib alsa-plugins --noconfirm 
-
-#Set sound output channel (0 for Auto, 1 for Analog out, 3 for HDMI)
-#amixer cset numid=1 x
-
-#Caveats for HDMI audio
-#Some applications require a setting in /boot/config.txt to force audio over HDMI:
-#hdmi_drive=2
